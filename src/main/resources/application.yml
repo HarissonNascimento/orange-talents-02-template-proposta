@@ -15,6 +15,12 @@ spring:
         show_sql: true
         format_sql: true
 
+management:
+  endpoint:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+        exclude: env,beans
 api:
   host: localhost
   data-analysis:
