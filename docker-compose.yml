@@ -134,7 +134,20 @@ services:
       VAULT_TOKEN: ee413645-dbe8-4848-afc6-6bb2768ada75
       VAULT_ADDR: http://127.0.0.1:8200
 
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: zuper
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: proposal-database
+    ports:
+    - 3306:3306
+    volumes:
+    - proposal-database:/var/lib/mysql
+
 volumes:
+  proposal-database:
   grafana-volume:
   prometheus-volume:
   postgres-volume:

@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/proposal-database?createDatabaseIfNotExist=true
+    username: zuper
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+api:
+  host: localhost
+  data-analysis:
+    url: ${api.host}:9999
+
+feign:
+  circuitbreaker:
+    enabled: true
