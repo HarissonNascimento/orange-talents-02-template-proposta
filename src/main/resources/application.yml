@@ -22,9 +22,13 @@ management:
         include: health,metrics,prometheus
         exclude: env,beans
 api:
-  host: localhost
   data-analysis:
-    url: ${api.host}:9999
+    host: localhost
+    url: ${api.data-analysis.host}:9999
+  account:
+    host: localhost
+    url: ${api.account.host}:8888
+    scheduled-time: 60000
 
 feign:
   circuitbreaker:

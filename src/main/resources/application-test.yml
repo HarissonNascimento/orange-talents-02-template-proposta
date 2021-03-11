@@ -16,9 +16,13 @@ spring:
         format_sql: true
 
 api:
-  host: localhost
   data-analysis:
-    url: ${api.host}:9999
+    host: localhost
+    url: ${api.data-analysis.host}:9999
+  account:
+    host: localhost
+    url: ${api.account.host}:8888
+    scheduled-time: 5000
 
 feign:
   circuitbreaker:

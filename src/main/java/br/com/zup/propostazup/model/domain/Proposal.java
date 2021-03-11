@@ -3,6 +3,7 @@ package br.com.zup.propostazup.model.domain;
 import br.com.zup.propostazup.annotation.CPForCNPJ;
 import br.com.zup.propostazup.client.data_analysis.response.DataAnalysisPostResponseBody;
 import br.com.zup.propostazup.model.enums.ProposalStatus;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -36,6 +37,8 @@ public class Proposal {
     @NotNull
     @Enumerated(EnumType.STRING)
     private ProposalStatus proposalStatus;
+    @OneToOne(mappedBy = "proposal", cascade = CascadeType.ALL)
+    private ProposalAccount proposalAccount;
 
     public Proposal(@NotBlank String document,
                     @NotBlank @Email String email,
@@ -84,7 +87,18 @@ public class Proposal {
         return proposalStatus;
     }
 
+    public ProposalAccount getProposalAccount() {
+        return proposalAccount;
+    }
+
     public void updateProposalStatus(DataAnalysisPostResponseBody dataAnalysisResponse) {
         this.proposalStatus = dataAnalysisResponse.getRequestResult().toProposalStatus();
+    }
+
+    public void updateProposalAccount(ProposalAccount proposalAccount) {
+        if (proposalAccount == null){
+            return;
+        }
+        this.proposalAccount = proposalAccount;
     }
 }
