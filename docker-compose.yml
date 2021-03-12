@@ -146,6 +146,15 @@ services:
     volumes:
     - proposal-database:/var/lib/mysql
 
+  proposta:
+    image: zupacademy/proposta
+    ports:
+    - 8080:8080
+    depends_on:
+      - mysql
+      - contas
+      - analise
+
 volumes:
   proposal-database:
   grafana-volume:

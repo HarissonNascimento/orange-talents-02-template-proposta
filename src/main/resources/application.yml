@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/proposal-database?createDatabaseIfNotExist=true
+    url: ${URL_MYSQL}
     username: zuper
     password: password
 
@@ -23,10 +23,10 @@ management:
         exclude: env,beans
 api:
   data-analysis:
-    host: localhost
+    host: ${ANALISE}
     url: ${api.data-analysis.host}:9999
   account:
-    host: localhost
+    host: ${CONTAS}
     url: ${api.account.host}:8888
     scheduled-time: 60000
 
