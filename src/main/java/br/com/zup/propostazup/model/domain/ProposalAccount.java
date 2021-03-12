@@ -29,6 +29,8 @@ public class ProposalAccount {
     private AccountDueDate accountDueDate;
     @OneToOne(cascade = CascadeType.ALL)
     private Proposal proposal;
+    @OneToMany(mappedBy = "proposalAccount", cascade = CascadeType.ALL)
+    private List<Biometry> biometrys;
 
     public ProposalAccount(String idAccount,
                            LocalDateTime issuedOn,
@@ -105,5 +107,9 @@ public class ProposalAccount {
 
     public Proposal getProposal() {
         return proposal;
+    }
+
+    public List<Biometry> getBiometrys() {
+        return biometrys;
     }
 }

@@ -84,7 +84,7 @@ class ProposalControllerTest {
     @DisplayName("Get proposal, return 404 status code when find not exists proposal")
     void getProposal_Return404StatusCode_WhenFindNotExistsProposal() throws Exception {
 
-        getRequest(URL_GET_PROPOSAL, 1L, mockMvc).andExpect(status().isNotFound());
+        getRequest(URL_GET_PROPOSAL, 9999L, mockMvc).andExpect(status().isNotFound());
 
     }
 
