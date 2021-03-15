@@ -4,6 +4,12 @@ spring:
     url: ${URL_MYSQL}
     username: zuper
     password: password
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:18080/auth/realms/proposal-realm}
+          jwk-set-uri: ${KEYCLOAK_JWKS_URI:http://localhost:18080/auth/realms/proposal-realm/protocol/openid-connect/certs}
 
   jpa:
     hibernate:
