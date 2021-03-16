@@ -8,22 +8,30 @@ public class AccountBlock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String idBlock;
+    private String remoteAddress;
     private LocalDateTime blockedIn;
     private String responsibleSystem;
-    private boolean active;
     @ManyToOne
     private ProposalAccount proposalAccount;
 
-    public AccountBlock(String id,
+    public AccountBlock(String remoteAddress,
                         LocalDateTime blockedIn,
-                        String responsibleSystem,
-                        boolean active) {
+                        String responsibleSystem) {
 
-        idBlock = id;
+        this.remoteAddress = remoteAddress;
         this.blockedIn = blockedIn;
         this.responsibleSystem = responsibleSystem;
-        this.active = active;
+    }
+
+    public AccountBlock(String remoteAddress,
+                        LocalDateTime blockedIn,
+                        String responsibleSystem,
+                        ProposalAccount proposalAccount) {
+
+        this.remoteAddress = remoteAddress;
+        this.blockedIn = blockedIn;
+        this.responsibleSystem = responsibleSystem;
+        this.proposalAccount = proposalAccount;
     }
 
     @Deprecated
@@ -34,8 +42,8 @@ public class AccountBlock {
         return id;
     }
 
-    public String getIdBlock() {
-        return idBlock;
+    public String getRemoteAddress() {
+        return remoteAddress;
     }
 
     public LocalDateTime getBlockedIn() {
@@ -44,10 +52,6 @@ public class AccountBlock {
 
     public String getResponsibleSystem() {
         return responsibleSystem;
-    }
-
-    public boolean isActive() {
-        return active;
     }
 
     public ProposalAccount getProposalAccount() {

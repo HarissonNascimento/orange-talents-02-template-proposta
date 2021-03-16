@@ -1,5 +1,7 @@
 package br.com.zup.propostazup.model.domain;
 
+import br.com.zup.propostazup.model.enums.StatusCard;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -31,6 +33,8 @@ public class ProposalAccount {
     private Proposal proposal;
     @OneToMany(mappedBy = "proposalAccount", cascade = CascadeType.ALL)
     private List<Biometry> biometrys;
+    @Enumerated(EnumType.STRING)
+    private StatusCard statusCard = StatusCard.DESBLOQUEADO;
 
     public ProposalAccount(String idAccount,
                            LocalDateTime issuedOn,
@@ -111,5 +115,14 @@ public class ProposalAccount {
 
     public List<Biometry> getBiometrys() {
         return biometrys;
+    }
+
+    public StatusCard getStatusCard() {
+        return statusCard;
+    }
+
+    public void lockCard(AccountBlock accountBlock, StatusCard result) {
+        this.accountBlocks.add(accountBlock);
+        this.statusCard = result;
     }
 }

@@ -13,8 +13,6 @@ public class AccountBlockPostResponseBody {
     private LocalDateTime blockedIn;
     @JsonProperty("sistemaResponsavel")
     private String responsibleSystem;
-    @JsonProperty("ativo")
-    private boolean active;
 
     public String getId() {
         return id;
@@ -28,11 +26,7 @@ public class AccountBlockPostResponseBody {
         return responsibleSystem;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
     public AccountBlock toAccountBlock() {
-        return new AccountBlock(this.id, this.blockedIn, this.responsibleSystem, this.active);
+        return new AccountBlock(this.id, this.blockedIn, this.responsibleSystem);
     }
 }

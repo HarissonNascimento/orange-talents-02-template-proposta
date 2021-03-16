@@ -25,6 +25,12 @@ public class RequisitionBuilder {
                 .content(toJson(content)));
     }
 
+    public static ResultActions postRequestWithUserAgentHeader(String url, Object uriVars, MockMvc mockMvc) throws Exception {
+        return mockMvc.perform(post(url, uriVars)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("User-Agent", "Test"));
+    }
+
     public static ResultActions getRequest(String url, Long objectId, MockMvc mockMvc) throws Exception {
         return mockMvc.perform(get(url, objectId));
     }
