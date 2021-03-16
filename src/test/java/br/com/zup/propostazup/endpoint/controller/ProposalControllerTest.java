@@ -1,5 +1,9 @@
 package br.com.zup.propostazup.endpoint.controller;
 
+import br.com.zup.propostazup.client.data_analysis.DataAnalysis;
+import br.com.zup.propostazup.client.data_analysis.enums.AnalysisStatus;
+import br.com.zup.propostazup.client.data_analysis.request.DataAnalysisPostRequestBody;
+import br.com.zup.propostazup.client.data_analysis.response.DataAnalysisPostResponseBody;
 import br.com.zup.propostazup.endpoint.repository.ProposalRepository;
 import br.com.zup.propostazup.model.domain.Proposal;
 import br.com.zup.propostazup.model.request.NewProposalPostRequestBody;
@@ -8,10 +12,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +34,7 @@ import static br.com.zup.propostazup.util.creator.AddressPostRequestCreator.crea
 import static br.com.zup.propostazup.util.creator.NewProposalPostRequestBodyCreator.createValidNewProposalPostRequestBody;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -50,6 +57,8 @@ class ProposalControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
+    @MockBean
+    private DataAnalysis dataAnalysis;
 
     private NewProposalPostRequestBody requestBody;
 
@@ -93,6 +102,11 @@ class ProposalControllerTest {
     @Test
     @DisplayName("Create new proposal, return 201 status code and persist new proposal if given valid NewProposalRequestBody")
     void createNewProposal_Return201StatusCodeAndPersistNewProposal_IfGivenValidNewProposalRequestBody() throws Exception {
+        DataAnalysisPostResponseBody clientResponseBody = new DataAnalysisPostResponseBody(AnalysisStatus.SEM_RESTRICAO);
+
+        BDDMockito.when(dataAnalysis.sendData(any(DataAnalysisPostRequestBody.class)))
+                .thenReturn(clientResponseBody);
+
         int size = proposalRepository.findAll().size();
 
         ResultActions resultActions = postRequest(URL_NEW_PROPOSAL, requestBody, mockMvc).andExpect(status().isCreated());
