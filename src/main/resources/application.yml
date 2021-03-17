@@ -22,11 +22,13 @@ spring:
         format_sql: true
 
 management:
-  endpoint:
+  endpoints:
     web:
       exposure:
-        include: health,metrics,prometheus
+        include: info,health,metrics,prometheus
         exclude: env,beans
+    prometheus:
+      enabled: true
 api:
   data-analysis:
     host: ${ANALISE}
