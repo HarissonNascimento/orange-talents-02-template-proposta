@@ -20,9 +20,16 @@
         <java.version>11</java.version>
         <spring-cloud.version>2020.0.1</spring-cloud.version>
         <spring-cloud-circuitbreaker.version>2.0.0</spring-cloud-circuitbreaker.version>
+        <opentracing-jaeger.version>3.3.1</opentracing-jaeger.version>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>io.opentracing.contrib</groupId>
+            <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
+            <version>${opentracing-jaeger.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>io.micrometer</groupId>

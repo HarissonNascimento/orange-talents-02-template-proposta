@@ -30,6 +30,8 @@ management:
     prometheus:
       enabled: true
 api:
+  jaeger:
+    host: ${TRACE}
   data-analysis:
     host: ${ANALISE}
     url: ${api.data-analysis.host}:9999
@@ -41,3 +43,12 @@ api:
 feign:
   circuitbreaker:
     enabled: true
+
+opentracing:
+  jaeger:
+    enabled: true
+    service-name: ${spring.application.name}
+    http-sender:
+      url: ${api.jaeger.host}:14268/api/traces
+    probabilistic-sampler:
+      sampling-rate: 1

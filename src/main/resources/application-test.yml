@@ -27,3 +27,7 @@ api:
 feign:
   circuitbreaker:
     enabled: true
+
+opentracing:
+  jaeger:
+    enabled: false
