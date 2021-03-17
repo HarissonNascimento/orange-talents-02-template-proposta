@@ -2,6 +2,7 @@ package br.com.zup.propostazup.client.account.response;
 
 
 import br.com.zup.propostazup.model.domain.AccountWallet;
+import br.com.zup.propostazup.model.enums.WalletType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public class AccountWalletPostResponseBody {
     @JsonProperty("associadaEm")
     private LocalDateTime associatedIn;
     @JsonProperty("emissor")
-    private String emitter;
+    private WalletType emitter;
 
     public String getId() {
         return id;
@@ -27,7 +28,7 @@ public class AccountWalletPostResponseBody {
         return associatedIn;
     }
 
-    public String getEmitter() {
+    public WalletType getEmitter() {
         return emitter;
     }
 

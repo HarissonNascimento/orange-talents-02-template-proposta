@@ -1,5 +1,7 @@
 package br.com.zup.propostazup.model.domain;
 
+import br.com.zup.propostazup.model.enums.WalletType;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -12,14 +14,15 @@ public class AccountWallet {
     private String walletId;
     private String email;
     private LocalDateTime associatedIn;
-    private String emitter;
+    @Enumerated(EnumType.STRING)
+    private WalletType emitter;
     @ManyToOne
     private ProposalAccount proposalAccount;
 
     public AccountWallet(String id,
                          String email,
                          LocalDateTime associatedIn,
-                         String emitter) {
+                         WalletType emitter) {
 
         walletId = id;
         this.email = email;
@@ -29,6 +32,19 @@ public class AccountWallet {
 
     @Deprecated
     protected AccountWallet() {
+    }
+
+    public AccountWallet(String id,
+                         String email,
+                         LocalDateTime now,
+                         WalletType wallet,
+                         ProposalAccount proposalAccount) {
+        walletId = id;
+        this.email = email;
+        this.associatedIn = now;
+        this.emitter = wallet;
+        this.proposalAccount = proposalAccount;
+
     }
 
     public Long getId() {
@@ -47,7 +63,7 @@ public class AccountWallet {
         return associatedIn;
     }
 
-    public String getEmitter() {
+    public WalletType getEmitter() {
         return emitter;
     }
 

@@ -129,4 +129,8 @@ public class ProposalAccount {
     public void updateTravels(TravelNotice travelNotice){
         this.travelNotices.add(travelNotice);
     }
+
+    public void updateWallets(AccountWallet accountWallet) {
+        this.accountWallet.add(accountWallet);
+    }
 }
