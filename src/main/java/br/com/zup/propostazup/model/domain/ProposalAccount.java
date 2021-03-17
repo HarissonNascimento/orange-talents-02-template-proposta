@@ -19,7 +19,7 @@ public class ProposalAccount {
     @OneToMany(mappedBy = "proposalAccount", cascade = CascadeType.ALL)
     private List<AccountBlock> accountBlocks;
     @OneToMany(mappedBy = "proposalAccount", cascade = CascadeType.ALL)
-    private List<AccountWarning> accountWarnings;
+    private List<TravelNotice> travelNotices;
     @OneToMany(mappedBy = "proposalAccount", cascade = CascadeType.ALL)
     private List<AccountWallet> accountWallet;
     @OneToMany(mappedBy = "proposalAccount", cascade = CascadeType.ALL)
@@ -40,7 +40,7 @@ public class ProposalAccount {
                            LocalDateTime issuedOn,
                            String holder,
                            List<AccountBlock> accountBlocks,
-                           List<AccountWarning> accountWarnings,
+                           List<TravelNotice> travelNotices,
                            List<AccountWallet> accountWallet,
                            List<AccountInstallments> accountInstallments,
                            BigDecimal credit,
@@ -52,7 +52,7 @@ public class ProposalAccount {
         this.issuedOn = issuedOn;
         this.holder = holder;
         this.accountBlocks = accountBlocks;
-        this.accountWarnings = accountWarnings;
+        this.travelNotices = travelNotices;
         this.accountWallet = accountWallet;
         this.accountInstallments = accountInstallments;
         this.credit = credit;
@@ -85,8 +85,8 @@ public class ProposalAccount {
         return accountBlocks;
     }
 
-    public List<AccountWarning> getAccountWarnings() {
-        return accountWarnings;
+    public List<TravelNotice> getAccountWarnings() {
+        return travelNotices;
     }
 
     public List<AccountWallet> getAccountWallet() {
@@ -124,5 +124,9 @@ public class ProposalAccount {
     public void lockCard(AccountBlock accountBlock, StatusCard result) {
         this.accountBlocks.add(accountBlock);
         this.statusCard = result;
+    }
+
+    public void updateTravels(TravelNotice travelNotice){
+        this.travelNotices.add(travelNotice);
     }
 }

@@ -88,7 +88,7 @@ public class AccountPostResponseBody {
         List<AccountBlock> accountBlocks =
                 this.block.stream().map(AccountBlockPostResponseBody::toAccountBlock).collect(Collectors.toList());
 
-        List<AccountWarning> accountWarnings =
+        List<TravelNotice> travelNotices =
                 this.warning.stream().map(AccountWarningPostResponseBody::toAccountWarning).collect(Collectors.toList());
 
         List<AccountWallet> accountWallet =
@@ -109,7 +109,7 @@ public class AccountPostResponseBody {
                 this.issuedOn,
                 this.holder,
                 accountBlocks,
-                accountWarnings,
+                travelNotices,
                 accountWallet,
                 accountInstallments,
                 this.credit,
