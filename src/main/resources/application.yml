@@ -31,7 +31,7 @@ management:
       enabled: true
 api:
   jaeger:
-    host: ${TRACE}
+    host: ${JAEGER}
   data-analysis:
     host: ${ANALISE}
     url: ${api.data-analysis.host}:9999

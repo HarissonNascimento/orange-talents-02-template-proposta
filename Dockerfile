@@ -4,7 +4,7 @@ MAINTAINER Harisson do Nascimento Pires
 
 ENV ANALISE="analise"
 ENV CONTAS="contas"
-ENV TRACE="jaeger"
+ENV JAEGER="http://jaeger"
 ENV URL_MYSQL="jdbc:mysql://mysql:3306/proposal-database?createDatabaseIfNotExist=true"
 
 ARG JAR_FILE=target/*.jar
