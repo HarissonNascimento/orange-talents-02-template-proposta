@@ -60,6 +60,8 @@ services:
       DB_PASSWORD: password
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: Pa55w0rd
+      KEYCLOAK_FRONTEND_URL: http://keycloak:8080/auth
+      PROXY_ADDRESS_FORWARDING: "true"
       POSTGRES_PORT_5432_TCP_ADDR: 127.0.0.1
 
   analise:
@@ -111,6 +113,9 @@ services:
     image: prom/prometheus
     volumes:
       - prometheus-volume:/etc/prometheus/
+      - ./src/main/resources/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      --config.file=/etc/prometheus/prometheus.yml
     network_mode: bridge
     ports:
       - "9090:9090"
