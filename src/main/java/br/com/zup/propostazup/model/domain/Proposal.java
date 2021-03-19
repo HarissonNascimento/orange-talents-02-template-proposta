@@ -120,6 +120,6 @@ public class Proposal {
     private String encryptDocument(String untreatedDocument) {
         this.salt = KeyGenerators.string().generateKey();
         this.hashedDocument = Sha512DigestUtils.shaHex(untreatedDocument);
-        return Encryptors.text("${api.document.encrypt.password}", this.salt).encrypt(untreatedDocument);
+        return Encryptors.text("proposalEncrypt", this.salt).encrypt(untreatedDocument);
     }
 }
