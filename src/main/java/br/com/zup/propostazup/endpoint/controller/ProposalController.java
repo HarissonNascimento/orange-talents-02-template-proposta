@@ -9,6 +9,7 @@ import br.com.zup.propostazup.model.request.NewProposalPostRequestBody;
 import br.com.zup.propostazup.model.response.ProposalGetResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.token.Sha512DigestUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,9 @@ public class ProposalController {
     @Transactional
     public ResponseEntity<?> createNewProposal(@RequestBody @Valid NewProposalPostRequestBody newProposalPostRequestBody) {
 
-        if (proposalRepository.existsByDocument(newProposalPostRequestBody.getDocument())) {
+        String hashedDocument = Sha512DigestUtils.shaHex(newProposalPostRequestBody.getDocument());
+
+        if (proposalRepository.existsByHashedDocument(hashedDocument)) {
             return ResponseEntity.unprocessableEntity().build();
         }
 

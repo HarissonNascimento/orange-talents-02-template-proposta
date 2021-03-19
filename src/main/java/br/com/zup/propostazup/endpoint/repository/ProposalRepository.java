@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProposalRepository extends JpaRepository<Proposal, Long> {
 
-    boolean existsByDocument(String document);
+    boolean existsByHashedDocument(String hashedDocument);
 
     List<Proposal> findAllByProposalStatusAndProposalAccountIsNull(ProposalStatus proposalStatus);
 }

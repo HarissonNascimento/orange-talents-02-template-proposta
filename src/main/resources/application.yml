@@ -30,6 +30,9 @@ management:
     prometheus:
       enabled: true
 api:
+  document:
+    encrypt:
+      password: ${DOCUMENT_PASSWORD:passwordEncrypter}
   jaeger:
     host: ${JAEGER}
   data-analysis:

@@ -18,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.token.Sha512DigestUtils;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -122,7 +123,7 @@ class ProposalControllerTest {
         assertAll(
                 () -> assertNotNull(proposal),
                 () -> assertEquals(requestBody.getName(), proposal.getName()),
-                () -> assertEquals(requestBody.getDocument(), proposal.getDocument()),
+                () -> assertEquals(Sha512DigestUtils.shaHex(requestBody.getDocument()), proposal.getHashedDocument()),
                 () -> assertEquals(requestBody.getSalary(), proposal.getSalary()),
                 () -> assertEquals(requestBody.getEmail(), proposal.getEmail()),
                 () -> assertNotNull(proposal.getId()),

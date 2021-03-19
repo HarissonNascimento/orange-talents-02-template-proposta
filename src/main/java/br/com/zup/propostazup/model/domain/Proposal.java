@@ -1,9 +1,10 @@
 package br.com.zup.propostazup.model.domain;
 
-import br.com.zup.propostazup.annotation.CPForCNPJ;
 import br.com.zup.propostazup.client.data_analysis.response.DataAnalysisPostResponseBody;
 import br.com.zup.propostazup.model.enums.ProposalStatus;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.token.Sha512DigestUtils;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.keygen.KeyGenerators;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -20,7 +21,6 @@ public class Proposal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
-    @CPForCNPJ
     private String document;
     @NotBlank
     @Email
@@ -39,6 +39,11 @@ public class Proposal {
     private ProposalStatus proposalStatus;
     @OneToOne(mappedBy = "proposal", cascade = CascadeType.ALL)
     private ProposalAccount proposalAccount;
+    @NotBlank
+    private String salt;
+    @NotBlank
+    private String hashedDocument;
+
 
     public Proposal(@NotBlank String document,
                     @NotBlank @Email String email,
@@ -46,13 +51,15 @@ public class Proposal {
                     @NotNull @Valid Address address,
                     @NotNull @Positive BigDecimal salary) {
 
+        String untreatedDocument = document.replaceAll("[-.]", "");
 
-        this.document = document.replaceAll("[-.]","");
+        this.document = encryptDocument(untreatedDocument);
         this.email = email;
         this.name = name;
         this.address = address;
         this.salary = salary;
         this.proposalStatus = ProposalStatus.NAO_ELEGIVEL;
+
     }
 
     @Deprecated
@@ -61,10 +68,6 @@ public class Proposal {
 
     public Long getId() {
         return id;
-    }
-
-    public String getDocument() {
-        return document;
     }
 
     public String getEmail() {
@@ -91,14 +94,32 @@ public class Proposal {
         return proposalAccount;
     }
 
+    public String getDocument() {
+        return document;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public String getHashedDocument() {
+        return hashedDocument;
+    }
+
     public void updateProposalStatus(DataAnalysisPostResponseBody dataAnalysisResponse) {
         this.proposalStatus = dataAnalysisResponse.getRequestResult().toProposalStatus();
     }
 
     public void updateProposalAccount(ProposalAccount proposalAccount) {
-        if (proposalAccount == null){
+        if (proposalAccount == null) {
             return;
         }
         this.proposalAccount = proposalAccount;
+    }
+
+    private String encryptDocument(String untreatedDocument) {
+        this.salt = KeyGenerators.string().generateKey();
+        this.hashedDocument = Sha512DigestUtils.shaHex(untreatedDocument);
+        return Encryptors.text("${api.document.encrypt.password}", this.salt).encrypt(untreatedDocument);
     }
 }
