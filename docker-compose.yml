@@ -152,7 +152,7 @@ services:
     - proposal-database:/var/lib/mysql
 
   proposta:
-    image: zupacademy/proposta
+    image: harissonnascimento/proposta
     ports:
     - 8080:8080
     depends_on:

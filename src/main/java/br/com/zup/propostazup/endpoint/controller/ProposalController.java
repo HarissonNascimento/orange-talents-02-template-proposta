@@ -33,13 +33,11 @@ public class ProposalController {
     @Transactional
     public ResponseEntity<?> createNewProposal(@RequestBody @Valid NewProposalPostRequestBody newProposalPostRequestBody) {
 
-        String hashedDocument = Sha512DigestUtils.shaHex(newProposalPostRequestBody.getDocument());
+        Proposal proposal = newProposalPostRequestBody.toProposal();
 
-        if (proposalRepository.existsByHashedDocument(hashedDocument)) {
+        if (proposalRepository.existsByHashedDocument(proposal.getHashedDocument())) {
             return ResponseEntity.unprocessableEntity().build();
         }
-
-        Proposal proposal = newProposalPostRequestBody.toProposal();
 
         proposalRepository.save(proposal);
 
